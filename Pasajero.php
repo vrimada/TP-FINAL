@@ -4,7 +4,7 @@
         private $apellido;
         private $numDoc;
         private $telefono;
-        private $Viaje;
+        private $obj_Viaje; 
         private $mensajeoperacion;
         
         public function __construct(){
@@ -12,7 +12,7 @@
            $this->apellido="";
            $this->numDoc="";
            $this->telefono=""; 
-           $this->Viaje= new Viaje();
+           $this->obj_Viaje= new Viaje();
         }
        
         public function cargar($NroD,$Nom,$Ape,$tel,$V){
@@ -56,15 +56,15 @@
                 $this->telefono = $telefono;
         }
         public function getViaje(){
-         return $this->Viaje;
+         return $this->obj_Viaje;
      }
      
-     public function setViaje($Viaje){
-         $this->Viaje = $Viaje;
+     public function setViaje($obj_Viaje){
+         $this->obj_Viaje = $obj_Viaje;
      }
         public function __toString()
         {
-             return "Pasajero: Apellido: ".$this->getApellido().", Nombre:".$this->getNombre().", núm dni:".$this->getNumDoc().", Telefono:".$this->getTelefono().", Viaje:".$this->getViaje()->getidviaje()."\n";
+             return "Pasajero: Apellido: ".$this->getApellido().", Nombre:".$this->getNombre().", núm dni:".$this->getNumDoc().", Telefono:".$this->getTelefono().", idViaje:".$this->getViaje()->getidviaje()."\n";
         }
         public function setmensajeoperacion($mensajeoperacion){
          $this->mensajeoperacion=$mensajeoperacion;
@@ -93,10 +93,10 @@
 					$this->setTelefono($row2['ptelefono']);
 					
 					//cargar viaje
-					$v = new Viaje();
-					$v->setidviaje($row2['idviaje']);
-					$v->Buscar($v->getIdViaje());
-               		$this->setViaje($v);
+					$obj_viaje = new Viaje();
+					$obj_viaje->setidviaje($row2['idviaje']);
+					$obj_viaje->Buscar($v->getIdViaje());
+               		$this->setViaje($obj_viaje);
 					$resp= true;
 				}				
 		 	}	else {
@@ -126,15 +126,15 @@
 					$Apellido=$row2['papellido'];
 					$telefono=$row2['ptelefono'];
 					//cargar viaje
-					$v = new Viaje();
-					$v->setidviaje($row2['idviaje']);
-					$v->Buscar($v->getIdViaje());
-               		$this->setViaje($v);
+					$obj_Viaje = new Viaje();
+					$obj_Viaje->setidviaje($row2['idviaje']);
+					$obj_Viaje->Buscar($obj_Viaje->getIdViaje());
+               		$this->setViaje($obj_Viaje);
 
              		
-					$p = new Pasajero();
-					$p->cargar($NroDoc,$Nombre,$Apellido,$telefono,$v);
-					array_push($arregloPasajero,$p);
+					$obj_Pasajero = new Pasajero();
+					$obj_Pasajero->cargar($NroDoc,$Nombre,$Apellido,$telefono,$obj_Viaje);
+					array_push($arregloPasajero,$obj_Pasajero);
 				}
 		 	}	else {
 		 			$this->setmensajeoperacion($base->getError());
@@ -184,7 +184,7 @@
 	    $resp = false; 
 	    $base = new BaseDatos();
 		$consultaModifica="UPDATE pasajero SET papellido='".$this->getApellido()."',pnombre='".$this->getNombre()."'
-                           ,ptelefono=".$this->getTelefono().",Viaje=".$this->getViaje()->getIdViaje().
+                           ,ptelefono=".$this->getTelefono().",idviaje=".$this->getViaje()->getIdViaje().
                            " WHERE rdocumento=". $this->getNumDoc();
 		if($base->Iniciar()){
 			if($base->Ejecutar($consultaModifica)){
