@@ -3,7 +3,7 @@
         private $idempresa;
         private $enombre;
         private $edireccion;
-      
+		private $mensajeoperacion;
         
         public function __construct(){
            $this->idempresa="";
