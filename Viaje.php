@@ -4,8 +4,8 @@ class Viaje{
     private $idviaje;
     private $destino;
     private $cantMaxima;
-    private $Responsable; 
-    private $Empresa;
+    private $obj_Responsable; 
+    private $obj_Empresa;
     private $importe; 
     private $tipoAsiento;
     private $idayvuelta;
@@ -20,12 +20,12 @@ class Viaje{
         $this->idayvuelta="";
     }
 
-    public function cargar($id, $destino, $cantMax, $Responsable,$Empresa,$importe,$tipoAsiento,$idayvuelta){
+    public function cargar($id, $destino, $cantMax, $obj_Responsable,$obj_Empresa,$importe,$tipoAsiento,$idayvuelta){
         $this->idviaje=$id;
         $this->destino=$destino;
         $this->cantMaxima=$cantMax;
-        $this->Responsable=$Responsable;
-        $this->Empresa=$Empresa;
+        $this->obj_Responsable=$obj_Responsable;
+        $this->obj_Empresa=$obj_Empresa;
         $this->importe=$importe;
         $this->tipoAsiento=$tipoAsiento;
         $this->idayvuelta=$idayvuelta;
@@ -42,13 +42,13 @@ class Viaje{
         return $this->cantMaxima;
     }
     public function getResponsable(){
-        return $this->Responsable;
+        return $this->obj_Responsable;
     }
     public function getEmpresa(){
-        return $this->Empresa;
+        return $this->obj_Empresa;
     }
-    public function setEmpresa($Empresa){
-        $this->Empresa = $Empresa;
+    public function setEmpresa($obj_Empresa){
+        $this->obj_Empresa = $obj_Empresa;
     }
     public function getImporte(){
         return $this->importe;
@@ -81,8 +81,8 @@ class Viaje{
     public function setcantMaxima($m){
         $this->cantMaxima=$m;
     }
-       public function setResponsable($responsablev){
-        $this->Responsable = $responsablev;
+       public function setResponsable($obj_responsablev){
+        $this->obj_Responsable = $obj_responsablev;
     }
     public function setmensajeoperacion($mensajeoperacion){
         $this->mensajeoperacion=$mensajeoperacion;
@@ -131,7 +131,7 @@ class Viaje{
         "\nTipo Asiento:\n".$this->getTipoAsiento().
         "\nIda y Vuelta:\n".$this->getidviaje().
         "\nEmpresa:\n".$this->getEmpresa().
-        "\nResponsable: ".$this->getResponsable();
+        "\nobj_Responsable: ".$this->getResponsable();
     }
 
 
@@ -153,17 +153,17 @@ class Viaje{
                     $this->setTipoAsiento($row2['tipoAsiento']);
                     $this->setIdayvuelta($row2['idayvuelta']);
 					
-					//cargar Empresa
-					$emp = new Empresa();
+					//cargar obj_
+					$obj_empresa = new Empresa();
                     $idEmpresa = $row2['idempresa'];
-					$emp->Buscar($idEmpresa);
-               		$this->setEmpresa($emp);
+					$obj_empresa->Buscar($idEmpresa);
+               		$this->setEmpresa($obj_empresa);
 
-                    //cargar Responsable
-					$empl = new ResponsableV();
+                    //cargar obj_Responsable
+					$obj_Responsable = new ResponsableV();
                     $numEmpleado = $row2['rnumeroempleado'];
-					$empl->Buscar($numEmpleado);
-               		$this->setResponsable($empl);
+					$obj_Responsable->Buscar($numEmpleado);
+               		$this->setResponsable($obj_Responsable);
 
 					$resp= true;
 				}				
@@ -194,16 +194,22 @@ class Viaje{
                     $idViaje = $row2['idviaje'];
 					$destino=$row2['vdestino'];
 					$cantPasajero=$row2['vcantmaxpasajeros'];
-					$responsable=$row2['rnumeroempleado'];
-					$empresa=$row2['idempresa'];
+					
 					$importe=$row2['vimporte'];
 					$tipoAsiento=$row2['tipoAsiento'];
 					$idayvuelta=$row2['idayvuelta'];
+
                     //$pasajeros=$this->datosPasajeros($idViaje);
+                    $obj_responsable = new ResponsableV();
+                    $obj_responsable->Buscar($row2['rnumeroempleado']);
+
+                    $obj_empresa= new Empresa();
+					$obj_empresa->Buscar($row2['idempresa']);
+                   
 					
-					$v = new Viaje();
-					$v->cargar($idViaje,$destino,$cantPasajero,$responsable,$empresa,$importe,$tipoAsiento,$idayvuelta);
-					array_push($datosViaje,$v);
+					$obj_viaje = new Viaje();
+					$obj_viaje->cargar($idViaje,$destino,$cantPasajero,$obj_responsable,$obj_empresa,$importe,$tipoAsiento,$idayvuelta);
+					array_push($datosViaje,$obj_viaje);
                     
                     //$arregloDatos[0] = $datosViaje;
                     //$arregloDatos[1] = $pasajeros;
