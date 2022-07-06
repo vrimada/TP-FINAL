@@ -57,7 +57,7 @@
 
         public function __toString()
         {
-             return "Responsable: Apellido: ".$this->getApellido().", Nombre:".$this->getNombre().", núm Empleado:".$this->getnumEmpleado().", num Licencia:".$this->getnumLicencia()."\n";
+             return "Apellido: ".$this->getApellido().", Nombre:".$this->getNombre().", Num.Empleado:".$this->getnumEmpleado().", Num.Licencia:".$this->getnumLicencia()."\n";
         }
         public function setmensajeoperacion($mensajeoperacion){
          $this->mensajeoperacion=$mensajeoperacion;

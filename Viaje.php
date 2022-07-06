@@ -21,14 +21,14 @@ class Viaje{
     }
 
     public function cargar($id, $destino, $cantMax, $obj_Responsable,$obj_Empresa,$importe,$tipoAsiento,$idayvuelta){
-        $this->idviaje=$id;
-        $this->destino=$destino;
-        $this->cantMaxima=$cantMax;
-        $this->obj_Responsable=$obj_Responsable;
-        $this->obj_Empresa=$obj_Empresa;
-        $this->importe=$importe;
-        $this->tipoAsiento=$tipoAsiento;
-        $this->idayvuelta=$idayvuelta;
+        $this->setidviaje($id);
+        $this->setDestino($destino);
+        $this->setcantMaxima($cantMax);
+        $this->setResponsable($obj_Responsable);
+        $this->setEmpresa($obj_Empresa);
+        $this->setImporte($importe);
+        $this->setTipoAsiento($tipoAsiento);
+        $this->setIdayvuelta($idayvuelta);
 
     }
    
@@ -56,19 +56,15 @@ class Viaje{
     public function setImporte($importe){
         $this->importe = $importe;
     }
-    
     public function getTipoAsiento(){
         return $this->tipoAsiento;
     }
-    
     public function setTipoAsiento($tipoAsiento){
         $this->tipoAsiento = $tipoAsiento;
     }
-    
     public function getIdayvuelta(){
         return $this->idayvuelta;
     }
-    
     public function setIdayvuelta($idayvuelta){
         $this->idayvuelta = $idayvuelta;
     }
@@ -97,24 +93,24 @@ class Viaje{
      * Arma un string con los datos del arreglo de pasajeros
      * @return string
      */
-    public function datosPasajeros($idViaje){
-        $aux = "";
-        //llama ala base de datos para cargar los pasajeros
-        $p = new Pasajero();
-        $coleccion_pasajeros = $p->listar("idviaje=".$idViaje);
+    // public function datosPasajeros($idViaje){
+    //     $aux = "";
+    //     //llama ala base de datos para cargar los pasajeros
+    //     $p = new Pasajero();
+    //     $coleccion_pasajeros = $p->listar("idviaje=".$idViaje);
 
-        if(count($coleccion_pasajeros)>0){
-            foreach ($coleccion_pasajeros as $key => $p)
-            {
-                $aux = $aux." ".$p->__toString()."\n";
-            }
-            $aux = substr($aux,0,strlen($aux)-2);
-            $aux  = $aux . "\n";
-        }else{
-            $aux ="No se han cargado pasajeros todavía.\n";
-        }
-        return $aux;
-       }
+    //     if(count($coleccion_pasajeros)>0){
+    //         foreach ($coleccion_pasajeros as $key => $p)
+    //         {
+    //             $aux = $aux." ".$p->__toString()."\n";
+    //         }
+    //         $aux = substr($aux,0,strlen($aux)-2);
+    //         $aux  = $aux . "\n";
+    //     }else{
+    //         $aux ="No se han cargado pasajeros todavía.\n";
+    //     }
+    //     return $aux;
+    //    }
     
       /**
      * Definicion de metodo string
@@ -122,16 +118,9 @@ class Viaje{
      */
     
     public function __toString(){
-        return 
-        "Reporte: Viaje 
-         \nidviaje del viaje: ".$this->getidviaje().
-        "\nDestino: ".$this->getDestino().
-        "\nCapacidad Máxima: ".$this->getCantMaxima().
-        "\nImporte: ".$this->getImporte().
-        "\nTipo Asiento:\n".$this->getTipoAsiento().
-        "\nIda y Vuelta:\n".$this->getidviaje().
-        "\nEmpresa:\n".$this->getEmpresa().
-        "\nobj_Responsable: ".$this->getResponsable();
+        return "Destino: ".$this->getDestino(). ", Identificador: ".$this->getidviaje().", Capacidad Máxima: ".$this->getCantMaxima().
+        ",Importe: $".$this->getImporte().", Tipo Asiento:".$this->getTipoAsiento().", Ida y Vuelta:".$this->getidviaje().
+        ",Empresa:".$this->getEmpresa()->getEnombre().", Responsable: ".$this->getResponsable()->getNumEmpleado()."\n";
     }
 
 
@@ -186,7 +175,6 @@ class Viaje{
 		    $cSql=$cSql.' where '.$condicion;
 		}
 		$cSql.=" order by idempresa ";
-        //echo $cSql;
 		if($base->Iniciar()){
 			if($base->Ejecutar($cSql)){				
 				$datosViaje= array();
@@ -275,7 +263,7 @@ class Viaje{
         tipoAsiento ='".$this->getTipoAsiento()."',
         idayvuelta='".$this->getIdayvuelta()."' WHERE idviaje =". $this->getidviaje();
 
-        echo $consultaModifica."\n";
+        //echo $consultaModifica."\n";
 		if($base->Iniciar()){
 			if($base->Ejecutar($consultaModifica)){
 			    $resp=  true;

@@ -64,7 +64,7 @@
      }
         public function __toString()
         {
-             return "Pasajero: Apellido: ".$this->getApellido().", Nombre:".$this->getNombre().", núm dni:".$this->getNumDoc().", Telefono:".$this->getTelefono().", idViaje:".$this->getViaje()->getidviaje()."\n";
+             return "Apellido: ".$this->getApellido().", Nombre:".$this->getNombre().", DNI:".$this->getNumDoc().", Telefono:".$this->getTelefono().", idViaje:".$this->getViaje()->getidviaje()."\n";
         }
         public function setmensajeoperacion($mensajeoperacion){
          $this->mensajeoperacion=$mensajeoperacion;

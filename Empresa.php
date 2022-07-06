@@ -45,7 +45,7 @@
    
         public function __toString()
         {
-             return "Empresa: ENombre: ".$this->getEnombre().", ID:".$this->getIdEmpresa().", Direccion:".$this->getEdireccion()."\n";
+             return "Empresa: ".$this->getEnombre().", ID:".$this->getIdEmpresa().", Direccion:".$this->getEdireccion()."\n";
         }
         public function setmensajeoperacion($mensajeoperacion){
          $this->mensajeoperacion=$mensajeoperacion;
