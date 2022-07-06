@@ -235,7 +235,24 @@ class Viaje{
 		return $resp;
 	}
 	
-	public function modificarTodo(){
+
+	public function eliminar(){
+		$base = new BaseDatos();
+		$resp = false;
+		if($base->Iniciar()){
+				$consultaBorra="DELETE FROM viaje WHERE idviaje=".$this->getidviaje();
+				if($base->Ejecutar($consultaBorra)){
+				    $resp =  true;
+				}else{
+						$this->setmensajeoperacion($base->getError());
+				}
+		}else{
+				$this->setmensajeoperacion($base->getError());
+		}
+		return $resp; 
+	}
+
+    public function modificarTodo(){
 	    $resp = false; 
 	    $base = new BaseDatos();
 		$consultaModifica="UPDATE viaje SET vdestino='".$this->getDestino()."',vcantmaxpasajeros=".$this->getCantMaxima()."
@@ -274,20 +291,5 @@ class Viaje{
 				$this->setmensajeoperacion($base->getError());
 		}
 		return $resp;
-	}
-	public function eliminar(){
-		$base = new BaseDatos();
-		$resp = false;
-		if($base->Iniciar()){
-				$consultaBorra="DELETE FROM viaje WHERE idviaje=".$this->getidviaje();
-				if($base->Ejecutar($consultaBorra)){
-				    $resp =  true;
-				}else{
-						$this->setmensajeoperacion($base->getError());
-				}
-		}else{
-				$this->setmensajeoperacion($base->getError());
-		}
-		return $resp; 
 	}
 }
