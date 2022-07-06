@@ -500,7 +500,7 @@ function modificarViaje($obj_viaje){
 
 function borrarViaje($obj_viaje){
     $obj_pasajero = new Pasajero();
-    $lista = $obj_pasajero->listar("");
+    $lista = $obj_pasajero->listar("idviaje=".$obj_viaje->getidviaje());
     if(count($lista)>0){
         echo Color::getWARNING()."Error hay pasajeros asignados. \n".Color::getENDC();
     }else{
